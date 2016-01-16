@@ -1,0 +1,91 @@
+$font-stack: Helvetica,
+sans-serif;
+$background-font-size: 25px;
+$black: #000;
+$transparent-black: rgba(40, 40, 40, 0.9);
+$lime-green: #00FF00;
+$green: rgb(0, 128, 0);
+$transparent-green: rgba(0, 128, 0, 0.8);
+$nav-box-width: 70px;
+$nav-box-height: 170px;
+@font-face {
+    font-family: 'matrix-font';
+    src: url('/fonts/matrix.ttf');
+}
+
+body {
+    margin: 0px;
+}
+
+#matrix-rain {
+    background-color: $black;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+
+.nav-box-wrapper {
+    color: red;
+    .nav-box {
+        display: inline-block;
+        padding: 20px;
+        border: 5px solid $lime-green;
+        border-radius: 5px;
+        background-color: $transparent-black;
+        margin: 4px;
+        .nav-button {
+            display: block;
+            border: 3px solid $green;
+            border-radius: 5px;
+            background-color: $transparent-green;
+            -moz-appearance: button;
+            appearance: button;
+            color: $lime-green;
+            text-decoration: none;
+            margin: 5px;
+        }
+        .title {
+            padding-bottom: 20px;
+            display: inline-block;
+            color: white;
+        }
+    }
+}
+
+#fps-counter {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: red;
+    color: white;
+}
+
+canvas {
+    cursor: inherit;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+}
+
+.center-parent {
+    height: 100vh;
+    .center-child {
+        position: relative;
+        top: 50%;
+        text-align: center;
+        transform: translateY(-50%);
+    }
+}
+
+label {
+    [type="checkbox"] {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+}
+
+label {
+    cursor: pointer;
+}
