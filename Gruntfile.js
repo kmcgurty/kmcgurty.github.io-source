@@ -55,6 +55,7 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
+					sourcemap: "none",
 					style: 'compact'
 				},
 				files: {
@@ -100,6 +101,11 @@ module.exports = function(grunt) {
 					flatten: true,
 					src: 'src/javascript/libs/*.js',
 					dest: 'build/javascript/libs/'
+				}, {
+					expand: true,
+					flatten: true,
+					src: 'src/images/*',
+					dest: 'build/images/'
 				}]
 			},
 		},
