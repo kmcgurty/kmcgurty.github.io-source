@@ -15,6 +15,7 @@ $nav-box-height: 170px;
 
 body {
     margin: 0px;
+    font-family: 'segoe ui';
 }
 
 #matrix-rain {
@@ -27,31 +28,62 @@ body {
 }
 
 .nav-box-wrapper {
-    color: red;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding-bottom: 10px;
     .nav-box {
-        display: inline-block;
-        padding: 20px;
         border: 5px solid $lime-green;
         border-radius: 5px;
         background-color: $transparent-black;
-        margin: 4px;
-        .nav-button {
-            display: block;
+        width: 49%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 15px;
+    }
+    .title-box {
+        .title {
+            padding: 3px;
             border: 3px solid $green;
             border-radius: 5px;
-            background-color: $transparent-green;
-            -moz-appearance: button;
-            appearance: button;
-            color: $lime-green;
-            text-decoration: none;
-            margin: 5px;
-        }
-        .title {
-            padding-bottom: 20px;
-            display: inline-block;
             color: white;
+            background-color: $transparent-green;
         }
     }
+}
+
+.box-title-wrapper {
+    .title {
+        margin-bottom: 15px;
+        color: white;
+    }
+}
+
+.button-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    .nav-button {
+        border: 3px solid $green;
+        border-radius: 5px;
+        background-color: $transparent-green;
+        margin-bottom: 5px;
+    }
+}
+
+.control-box {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 5px solid $lime-green;
+    border-radius: 5px;
+    background-color: $transparent-black;
+}
+
+a {
+    text-decoration: none;
+    color: $lime-green;
 }
 
 #fps-counter {
@@ -70,6 +102,7 @@ canvas {
 }
 
 .center-parent {
+    margin: auto;
     height: 100vh;
     .center-child {
         position: relative;
@@ -77,6 +110,15 @@ canvas {
         text-align: center;
         transform: translateY(-50%);
     }
+}
+
+.box-wrapper {
+    width: 410px;
+    color: white;
+}
+
+.warning {
+    color: red;
 }
 
 label {
