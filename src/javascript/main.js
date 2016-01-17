@@ -11,13 +11,16 @@
         textSize: 30,
         useTextShadows: false, //shadows cause major performance problems
         fps: 20,
-        displayFps: false
+        displayFps: false,
+        fillPattern: true,
+        displayBoxes: true
     };
 
     addEventListeners();
     var columnData = columnDataInit();
     var ctx = canvasInit();
     var pattern = createPattern();
+    var catImage = createCat();
 
     var animLoop = setInterval(draw, 1000 / options.fps);
 
@@ -66,13 +69,14 @@
     function draw() {
         if (options.displayFps) document.getElementById("fps-counter").innerHTML = "FPS: " + calculateFPS() + "/" + options.fps;
 
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        if (options.fillPattern) {
+            //fill background for fade effect
+            ctx.fillStyle = pattern;
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        } else {
+            ctx.drawImage(catImage, 0, 0, ctx.canvas.width, ctx.canvas.height);
+        }
 
-        //fill background for fade effect
-        ctx.fillStyle = pattern;
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.fill();
         //fill for text
         ctx.fillStyle = "lime";
 
@@ -174,6 +178,14 @@
         return ctx.createPattern(pattern, "repeat");
     }
 
+    function createCat() {
+        var image = new Image();
+        image.src = "images/cat.jpg";
+        image.width = document.innerWidth;
+        image.height = document.innerHeight;
+        return image;
+    }
+
     function addEventListeners() {
         window.onresize = function(event) {
             //re-init everything on resize to prevent stretching
@@ -227,12 +239,36 @@
                 controlBox.className = "control-box expanded";
                 hideShowControls.innerHTML = "▼ Hide controls";
             }
-
-            document.getElementById("change-fps").value = options.fps;
         });
 
+        document.getElementById("toggle-cat").addEventListener("click", function() {
+            options.fillPattern = !options.fillPattern;
+        });
 
+        document.querySelector(".toggle-boxes").addEventListener("click", function() {
+            var areShown = options.displayBoxes;
+            var boxes = document.querySelector(".box-wrapper");
+            var button = document.querySelector(".toggle-boxes .nav-button");
 
+            options.displayBoxes = !options.displayBoxes;
+
+            if (areShown) {
+                boxes.style.display = "none";
+                button.innerHTML = "Show boxes";
+            } else {
+                boxes.style.display = "";
+                button.innerHTML = "Hide boxes";
+            }
+        });
+
+        window.onLoad = function() {
+            document.getElementById("change-fps").value = options.fps;
+
+            if (!options.displayBoxes) {
+                document.querySelector(".box-wrapper").style.display = "none";
+                document.querySelector(".toggle-boxes .nav-button").innerHTML = "Show boxes";
+            }
+        };
     }
 
     function getRandomChar() {
