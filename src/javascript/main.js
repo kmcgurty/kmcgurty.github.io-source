@@ -3,10 +3,15 @@
 (function() {
 
     var options = {
-        matrixLetters: ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'],
+        matrixLetters: ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            ':', ';', '<', '=', '>', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+            'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+            'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'
+        ],
         textSize: 30,
         useTextShadows: false, //shadows cause major performance problems
-        fps: 20
+        fps: 20,
+        displayFps: false
     };
 
     addEventListeners();
@@ -59,7 +64,7 @@
     }
 
     function draw() {
-        document.getElementById("fps-counter").innerHTML = "FPS: " + calculateFPS() + "/" + options.fps;
+        if (options.displayFps) document.getElementById("fps-counter").innerHTML = "FPS: " + calculateFPS() + "/" + options.fps;
 
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -191,6 +196,22 @@
             options.useTextShadows = !options.useTextShadows;
             ctx = canvasInit();
         });
+
+        document.getElementById("hide-show-controls").addEventListener("click", function() {
+            var controlBox = document.getElementsByClassName("control-box")[0];
+            var isExpanded = controlBox.className.indexOf("expanded") !== -1;
+            var hideShowControls = document.querySelector("#hide-show-controls .box-title");
+
+            if (isExpanded) {
+                controlBox.className = "control-box collapsed";
+                hideShowControls.innerHTML = "▶ Show controls";
+            } else {
+                controlBox.className = "control-box expanded";
+                hideShowControls.innerHTML = "▼ Hide controls";
+            }
+        });
+
+
 
     }
 

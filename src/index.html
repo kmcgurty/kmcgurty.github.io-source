@@ -46,15 +46,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="control-box">
-                    <div class="box-title-wrapper">
-                        <div class="title">Controls</div>
+                <div class="controls-wrapper">
+                    <div id="hide-show-controls">
+                        <div class="box-title-wrapper">
+                            <div class="box-title">▶ Show controls</div>
+                        </div>
                     </div>
-                    <div class="button-wrapper">
-                        <div class="nav-button"><a href="#" id="stop-anim">Stop animation</a></div>
-                        <label>
-                            <input type="checkbox" id="toggle-shadows">Draw shadows (<span class="warning">poor performance on FF</span>)
-                        </label>
+                    <div class="control-box collapsed">
+                        <div class="button-wrapper">
+                            <a href="#" id="stop-anim">
+                                <div class="nav-button">Stop animation</div>
+                            </a>
+                            <label id="toggle-shadows-wrapper">
+                                <input type="checkbox" id="toggle-shadows">Draw shadows (<span class="warning">poor performance on FF</span>)
+                            </label>
+                            <div id="change-fps-wrapper">
+                                <input id="change-fps" type="number" min="0" maxlength="3" size="3">&nbsp;FPS
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
