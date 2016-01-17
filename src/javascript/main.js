@@ -197,6 +197,24 @@
             ctx = canvasInit();
         });
 
+        document.getElementById("toggle-fps").addEventListener("change", function() {
+            options.displayFps = !options.displayFps;
+            document.getElementById("fps-counter").innerHTML = "";
+        });
+
+        document.getElementById("change-fps").addEventListener("input", function(event) {
+            var fps = event.target.valueAsNumber;
+
+            if (isNaN(fps))
+                fps = 20;
+
+            options.fps = fps;
+            clearInterval(animLoop);
+            animLoop = setInterval(draw, 1000 / options.fps);
+
+
+        });
+
         document.getElementById("hide-show-controls").addEventListener("click", function() {
             var controlBox = document.getElementsByClassName("control-box")[0];
             var isExpanded = controlBox.className.indexOf("expanded") !== -1;
@@ -209,6 +227,8 @@
                 controlBox.className = "control-box expanded";
                 hideShowControls.innerHTML = "▼ Hide controls";
             }
+
+            document.getElementById("change-fps").value = options.fps;
         });
 
 
