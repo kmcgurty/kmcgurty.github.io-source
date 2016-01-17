@@ -5,5 +5,8 @@ You can easily have this running on your own server.
 1. Install [Node](https://nodejs.org/en/)
 2. Clone this repo
 3. run `npm install` in the directory you cloned
-4. run `npm start` to start the Express server (default port: 3000, you can use iptables to forward port 80 traffic to 3000)
-5. If you're running this on a VPS, you probably want to use [forever service](https://github.com/zapty/forever-service). It will start the server on boot and also restart if problems arise.
+4. run `grunt` to run everything or `grunt buildAll` to compile everything
+
+About
+---
+I liked the effect from this [Youtube video](https://www.youtube.com/watch?v=DLyPvuSx7qA) and wanted to recreate it. I created it without looking at the source code included.
