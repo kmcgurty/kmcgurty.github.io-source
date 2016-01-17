@@ -12,7 +12,6 @@ var columnData = columnDataInit();
 var ctx = canvasInit();
 var pattern = createPattern();
 
-
 var animLoop = setInterval(draw, 1000 / options.fps);
 
 function canvasInit() {
@@ -58,7 +57,7 @@ function columnDataInit() {
 }
 
 function draw() {
-	document.getElementById("fps-counter").innerHTML = "FPS: " + calculateFPS() + "/20";
+	document.getElementById("fps-counter").innerHTML = "FPS: " + calculateFPS() + "/" + options.fps;
 
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -89,16 +88,25 @@ function draw() {
 		//increment the height of textSize
 		columnData[i].yPos += options.textSize;
 
-		var randomChance = randomInt(0, 100);
-		//% of change it has to reset once it reaches a certain distance of the page
-		if (randomChance < 5 && columnData[i].yPos > (window.innerHeight / 2) ||
-			randomChance < 20 && columnData[i].yPos > (window.innerHeight / 1.5)) {
+		var randomChance = randomInt(0, 1000);
 
-			columnData[i].hasEnded = true;
+		//40% chance
+		if (randomChance <= 400) {
+			var randomColumn = randomInt(0, columnData.length);
+			var randomCharData = randomInt(0, columnData[randomColumn].charData.length);
+			var randomReplacementChar = getRandomChar();
+
+			//sometimes randomCharData can be 0 which = undefined (I couldn't be bothered to figure out why)
+			if (randomCharData !== 0) {
+				columnData[randomColumn].charData[randomCharData].character = randomReplacementChar;
+			}
 		}
 
-		if (randomChance == 1) {
+		//5% chance and 20% chance
+		if (randomChance < 50 && columnData[i].yPos > (window.innerHeight / 2) ||
+			randomChance < 200 && columnData[i].yPos > (window.innerHeight / 1.5)) {
 
+			columnData[i].hasEnded = true;
 		}
 
 		//once ia column has ended, start remove the first letter
@@ -177,7 +185,7 @@ function addEventListeners() {
 		}
 	});
 
-	document.getElementById("toggle-shadows").addEventListener("change", function(){
+	document.getElementById("toggle-shadows").addEventListener("change", function() {
 		options.useTextShadows = !options.useTextShadows;
 		ctx = canvasInit();
 	});
