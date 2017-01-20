@@ -25,6 +25,8 @@ body {
     width: 100%;
 }
 
+
+/**
 .nav-box-wrapper {
     color: white;
     display: flex;
@@ -52,10 +54,11 @@ body {
         }
     }
 }
+*/
 
 .box-title-wrapper {
     .title {
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         color: white;
     }
 }
@@ -65,16 +68,6 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-}
-
-.nav-button {
-    border: 3px solid $green;
-    border-radius: 5px;
-    background-color: $transparent-green;
-    margin: 1px;
-    margin-bottom: 5px;
-    padding-left: 3px;
-    padding-right: 3px;
 }
 
 .nav-button {
@@ -154,13 +147,20 @@ canvas {
     color: red;
 }
 
-#hide-show-controls {
-    border: 5px solid $lime-green;
-    border-radius: 5px;
-    background-color: $transparent-black;
-    cursor: pointer;
-    .box-title {
-        padding: 5px;
+.controls-wrapper,
+.nav-box-wrapper {
+    #hide-show-controls,
+    .nav-box {
+        border: 5px solid $lime-green;
+        border-radius: 5px;
+        background-color: $transparent-black;
+        margin-bottom: 5px;
+        .box-title {
+            padding: 5px;
+        }
+    }
+    #hide-show-controls {
+        cursor: pointer;
     }
 }
 
