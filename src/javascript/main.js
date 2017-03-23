@@ -1,282 +1,102 @@
-//simply put, each column (an array of information) of text is constantly getting letters added and removed from it 
+var global = {
+    fpsCap: 20,
+    displayFps: true,
+    pause: false,
+    shadows: false,
+    fontSize: 37,
+    displayBoxes: true,
+    ctx: null,
+    rain: [],
+    background: null,
+    cols: 0
+};
 
-(function() {
+window.onload = init;
 
-    var options = {
-        matrixLetters: ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            ':', ';', '<', '=', '>', '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-            'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-            'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'
-        ],
-        textSize: 30,
-        useTextShadows: false, //shadows cause major performance problems
-        fps: 20,
-        displayFps: false,
-        fillPattern: true,
-        displayBoxes: true
-    };
+function init() {
+    loadHTML();
+    addLiseners();
+    canvasSetup();
+}
 
-    addEventListeners();
-    var columnData = columnDataInit();
-    var ctx = canvasInit();
-    var pattern = createPattern();
-    var catImage = createCat();
+function canvasSetup() {
+    global.rain = [];
 
-    var animLoop = setInterval(draw, 1000 / options.fps);
+    var canvas = document.getElementById('matrix-rain');
+    global.ctx = canvas.getContext("2d");
+    global.ctx.canvas.width = window.innerWidth;
+    global.ctx.canvas.height = window.innerHeight;
+    global.ctx.font = global.fontSize + "px  matrix-font";
+    global.background = createBackground();
 
-    function canvasInit() {
-        var canvas = document.getElementById('matrix-rain');
-        var ctx = canvas.getContext("2d");
-        ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
-        ctx.font = options.textSize + "px  matrix-font";
+    global.cols = Math.ceil(window.innerWidth / global.fontSize); //multiply by two to fill the other half of the page
 
-        if (options.useTextShadows) {
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = "lime";
-        }
-
-        return ctx;
+    for (var i = 0; i < global.cols; i++) {
+        global.rain[i] = new Stream();
+        global.rain[i].appendChar();
     }
 
-    function columnDataInit() {
-        var numColumns = Math.ceil(window.innerWidth / options.textSize), //multiply by two to fill the other half of the page
-            columnData = [],
-            xPos;
+    draw();
+}
 
-        for (var i = 0; i < numColumns; i++) {
-            //init the xposition of each column
-            if (typeof columnData[i - 1] === 'undefined') {
-                xPos = 0;
-            } else {
-                xPos = (columnData[i - 1].xPos + options.textSize); //divide by two since we doubled it above. this pushes the columns closer together (to be honest, I don't know why...)
-            }
-
-            //have a random starting position so they don't fall at the same time
-            var yPos = randomInt(0, 200);
-
-            columnData[i] = {
-                xPos: xPos, //x position of the column
-                yPos: yPos, //y position of the last character
-                charData: [], //character and character position. is generated later with addCharToColumn()
-                hasEnded: false
-            };
-        }
-
-        return columnData;
+function draw() {
+    if (global.displayFps) {
+        document.querySelector("#fps-counter").innerHTML = countFPS() + "/" + global.fpsCap;
     }
 
-    function draw() {
-        if (options.displayFps) document.getElementById("fps-counter").innerHTML = "FPS: " + calculateFPS() + "/" + options.fps;
+    if (!global.pause) {
+        setTimeout(function() { //rate limit drawing
+            global.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            global.ctx.fillStyle = global.background; //striped monitor-like background
+            global.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-        if (options.fillPattern) {
-            //fill background for fade effect
-            ctx.fillStyle = pattern;
-            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        } else {
-            ctx.drawImage(catImage, 0, 0, ctx.canvas.width, ctx.canvas.height);
-        }
+            global.ctx.save();
 
-        //fill for text
-        ctx.fillStyle = "lime";
+            if (global.shadows) {
 
-        for (var i = 0; i < columnData.length; i++) {
-            //add a random letter to the bottom of each column if it hasn't ended yet
-            if (!columnData[i].hasEnded) {
-                addCharToColumn(i);
+                global.ctx.shadowBlur = 15;
+                global.ctx.shadowColor = "lime";
+
             }
 
-            for (var j = 0; j < columnData[i].charData.length; j++) {
-                //color the last character white, otherwise color it green
-                if (j == columnData[i].charData.length - 1) {
-                    ctx.fillStyle = "white";
+            for (var i = 0; i < global.cols; i++) {
+                if (!global.rain[i].shouldReset) {
+                    global.rain[i].appendChar();
+                    global.rain[i].getReset();
                 } else {
-                    ctx.fillStyle = "lime";
+                    global.rain[i].removeChar();
                 }
-                ctx.fillText(columnData[i].charData[j].character, columnData[i].xPos, columnData[i].charData[j].charPosition);
+
+                global.rain[i].show();
             }
 
-            //increment the height of textSize
-            columnData[i].yPos += options.textSize;
+            global.ctx.restore();
 
-            var randomChance = randomInt(0, 1000);
-
-            //40% chance
-            if (randomChance <= 400) {
-                var randomColumn = randomInt(0, columnData.length);
-                var randomCharData = randomInt(0, columnData[randomColumn].charData.length);
-                var randomReplacementChar = getRandomChar();
-
-                //sometimes randomCharData can be 0 which = undefined (I couldn't be bothered to figure out why)
-                if (randomCharData !== 0) {
-                    columnData[randomColumn].charData[randomCharData].character = randomReplacementChar;
-                }
-            }
-
-            //5% chance and 20% chance
-            if (randomChance < 50 && columnData[i].yPos > (window.innerHeight / 2) ||
-                randomChance < 200 && columnData[i].yPos > (window.innerHeight / 1.5)) {
-
-                columnData[i].hasEnded = true;
-            }
-
-            //once ia column has ended, start remove the first letter
-            if (columnData[i].hasEnded) {
-                columnData[i].charData.shift();
-
-                if (columnData[i].charData.length === 0) {
-                    //when the column has nothing left, reset hasEnded and reset the yPos
-                    columnData[i].hasEnded = false;
-                    columnData[i].yPos = randomInt(0, 200);
-                }
-            }
-        }
+            requestAnimationFrame(draw);
+        }, 1000 / global.fpsCap);
     }
+}
 
-    var lastLoop = new Date();
+countFPS = (function() {
+    var lastLoop = (new Date()).getMilliseconds();
+    var count = 1;
+    var fps = 0;
 
-    function calculateFPS() {
-        //fps, thanks to http://stackoverflow.com/questions/4787431/check-fps-in-js
-        var thisLoop = new Date();
-        var fps = Math.floor(1000 / (thisLoop - lastLoop));
-        lastLoop = thisLoop;
-        return fps;
-    }
-
-    //add a character to the end of a cloumn
-    function addCharToColumn(column, reset) {
-        var character = getRandomChar(),
-            charPosition,
-            lastChar = columnData[column].charData.length - 1;
-
-        if (typeof columnData[column].charData[lastChar - 1] === 'undefined') {
-            charPosition = columnData[column].yPos;
+    return function() {
+        var currentLoop = (new Date()).getMilliseconds();
+        if (lastLoop > currentLoop) {
+            fps = count;
+            count = 1;
         } else {
-            charPosition = columnData[column].charData[lastChar].charPosition + options.textSize;
+            count += 1;
         }
+        lastLoop = currentLoop;
+        return fps;
+    };
+}());
 
-        columnData[column].charData.push({
-            character: character,
-            charPosition: charPosition
-        });
-    }
-
-
-    function createPattern() {
-        //special thanks to http://stackoverflow.com/questions/9019220/html5-canvas-fill-with-two-colours
-        //for the striped background
-        var pattern = document.createElement('canvas');
-        pattern.width = window.innerWidth;
-        pattern.height = 10;
-        var pctx = pattern.getContext('2d');
-
-        pctx.fillStyle = "rgb(25, 25, 25)";
-        pctx.fillRect(0, 0, pattern.width, pattern.height);
-        pctx.fillStyle = "rgb(20, 20, 20)";
-        pctx.fillRect(0, (pattern.height / 2), pattern.width, pattern.height);
-
-        return ctx.createPattern(pattern, "repeat");
-    }
-
-    function createCat() {
-        var image = new Image();
-        image.src = "images/cat.jpg";
-        image.width = document.innerWidth;
-        image.height = document.innerHeight;
-        return image;
-    }
-
-    function addEventListeners() {
-        window.onresize = function(event) {
-            //re-init everything on resize to prevent stretching
-            ctx = canvasInit();
-            columnData = columnDataInit();
-        };
-
-        document.getElementById("stop-anim").addEventListener("click", function() {
-            if (animLoop) {
-                clearInterval(animLoop);
-                animLoop = false;
-                document.getElementById("stop-anim").text = "Start animation";
-            } else {
-                animLoop = setInterval(draw, 1000 / options.fps);
-                document.getElementById("stop-anim").text = "Stop animation";
-            }
-        });
-
-        document.getElementById("toggle-shadows").addEventListener("change", function() {
-            options.useTextShadows = !options.useTextShadows;
-            ctx = canvasInit();
-        });
-
-        document.getElementById("toggle-fps").addEventListener("change", function() {
-            options.displayFps = !options.displayFps;
-            document.getElementById("fps-counter").innerHTML = "";
-        });
-
-        document.getElementById("change-fps").addEventListener("input", function(event) {
-            var fps = event.target.valueAsNumber;
-
-            if (isNaN(fps))
-                fps = 20;
-
-            options.fps = fps;
-            clearInterval(animLoop);
-            animLoop = setInterval(draw, 1000 / options.fps);
-
-
-        });
-
-        document.getElementById("hide-show-controls").addEventListener("click", function() {
-            var controlBox = document.getElementsByClassName("control-box")[0];
-            var isExpanded = controlBox.className.indexOf("expanded") !== -1;
-            var hideShowControls = document.querySelector("#hide-show-controls .box-title");
-
-            if (isExpanded) {
-                controlBox.className = "control-box collapsed";
-                hideShowControls.innerHTML = "▶ Show controls";
-            } else {
-                controlBox.className = "control-box expanded";
-                hideShowControls.innerHTML = "▼ Hide controls";
-            }
-        });
-
-        document.getElementById("toggle-cat").addEventListener("click", function() {
-            options.fillPattern = !options.fillPattern;
-        });
-
-        document.querySelector(".toggle-boxes").addEventListener("click", function() {
-            var areShown = options.displayBoxes;
-            var boxes = document.querySelector(".box-wrapper");
-            var button = document.querySelector(".toggle-boxes .nav-button");
-
-            options.displayBoxes = !options.displayBoxes;
-
-            if (areShown) {
-                boxes.style.display = "none";
-                button.innerHTML = "Show boxes";
-            } else {
-                boxes.style.display = "";
-                button.innerHTML = "Hide boxes";
-            }
-        });
-
-        window.onLoad = function() {
-            document.getElementById("change-fps").value = options.fps;
-
-            if (!options.displayBoxes) {
-                document.querySelector(".box-wrapper").style.display = "none";
-                document.querySelector(".toggle-boxes .nav-button").innerHTML = "Show boxes";
-            }
-        };
-    }
-
-    function getRandomChar() {
-        return options.matrixLetters[randomInt(0, options.matrixLetters.length)];
-    }
-
-    function randomInt(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
-
-})();
+function rand(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}

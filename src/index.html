@@ -5,6 +5,10 @@
     <title>Welcome to the Matrix</title>
     <link rel="shortcut icon" type="image/png" href="/images/favicon.ico" />
     <link rel='stylesheet' type="text/css" href='/stylesheets/main.css'>
+    <script src="/javascript/lib/jquery-1.12.3.min.js"></script>
+    <script src="/javascript/listeners.js"></script>
+    <script src="/javascript/stream.js"></script>
+    <script src="/javascript/main.js"></script>
     <meta charset="UTF-8">
 </head>
 
@@ -24,24 +28,6 @@
                     <div class="nav-box">
                         <div class="box-title-wrapper">
                             <div class="title">Other projects</div>
-                        </div>
-                        <div class="button-wrapper">
-                            <div class="nav-button"><a href="https://chrome.google.com/webstore/detail/true-unexpected-jihad/ihglffdfnfdifnlgjecjbnpkjffciibm">True Unexpected Jihad</a></div>
-                        </div>
-                        <div class="button-wrapper">
-                            <div class="nav-button"><a href="https://www.gta5-mods.com/scripts/fully-loaded-menu-outfit-saver">Fully Loaded Mod Menu</a></div>
-                        </div>
-                        <div class="button-wrapper">
-                            <div class="nav-button"><a href="http://kmcgurty.com/lost-in-translation/">Lost in Translation</a></div>
-                        </div>
-                        <div class="button-wrapper">
-                            <div class="nav-button"><a href="http://kmcgurty.com/markov-chain/">Markov Chain Generator</a></div>
-                        </div>
-                        <div class="button-wrapper">
-                            <div class="nav-button"><a href="https://github.com/kmcgurty/wheel-spin">Wheel Spin Proof of Concept</a></div>
-                        </div>
-                        <div class="button-wrapper">
-                            <div class="nav-button"><a href="http://kmcgurty.com/osha-death-list-viewer/">Osha Death List Viewer</a></div>
                         </div>
                     </div>
                 </div>
@@ -67,13 +53,13 @@
                     </div>
                     <div id="hide-show-controls">
                         <div class="box-title-wrapper">
-                            <div class="box-title">▶ Show controls</div>
+                            <div class="box-title">Controls ▶</div>
                         </div>
                     </div>
                     <div class="control-box collapsed">
                         <div class="button-wrapper">
                             <a href="#" id="stop-anim">
-                                <div class="nav-button">Stop animation</div>
+                                <div class="nav-button">Pause animation</div>
                             </a>
                             <label id="toggle-shadows-wrapper">
                                 <input type="checkbox" id="toggle-shadows">Draw shadows (<span class="warning">poor performance on FF</span>)
@@ -95,7 +81,6 @@
         <div id="fps-counter"></div>
         <canvas id="matrix-rain"></canvas>
     </div>
-    <script src="/javascript/main.js"></script>
 </body>
 
 </html>

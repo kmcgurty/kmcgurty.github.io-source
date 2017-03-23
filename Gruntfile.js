@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             },
 
             scripts: {
-                files: ['src/javascript/*.js'],
+                files: ['src/javascript/*.js', 'src/javascript/*.json'],
                 tasks: ['copy']
             },
 
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
                 }, {
                     expand: true,
                     flatten: true,
-                    src: 'src/javascript/*.js',
+                    src: ['src/javascript/*.js', 'src/javascript/*.json'],
                     dest: 'build/javascript/'
                 }, {
                     expand: true,
