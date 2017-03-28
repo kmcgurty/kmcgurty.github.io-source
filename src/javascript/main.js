@@ -2,21 +2,29 @@ var global = {
     fpsCap: 20,
     displayFps: true,
     pause: false,
-    shadows: false,
-    fontSize: 37,
     displayBoxes: true,
     ctx: null,
     rain: [],
+    spSheet: {
+        img: null,
+        width: 43,
+        height: 60,
+        numSprites: 90
+    },
     background: null,
-    cols: 0
+    cols: 0,
+    drawWidth: 23,
+    drawHeight: 30
 };
 
 window.onload = init;
 
 function init() {
     loadHTML();
+    loadSpriteSheet();
     addLiseners();
     canvasSetup();
+    draw();
 }
 
 function canvasSetup() {
@@ -26,17 +34,16 @@ function canvasSetup() {
     global.ctx = canvas.getContext("2d");
     global.ctx.canvas.width = window.innerWidth;
     global.ctx.canvas.height = window.innerHeight;
-    global.ctx.font = global.fontSize + "px  matrix-font";
     global.background = createBackground();
 
-    global.cols = Math.ceil(window.innerWidth / global.fontSize); //multiply by two to fill the other half of the page
+    global.cols = Math.ceil(window.innerWidth / global.drawWidth); //multiply by two to fill the other half of the page
+
+
 
     for (var i = 0; i < global.cols; i++) {
-        global.rain[i] = new Stream();
+        global.rain[i] = new Column();
         global.rain[i].appendChar();
     }
-
-    draw();
 }
 
 function draw() {
@@ -94,6 +101,27 @@ countFPS = (function() {
         return fps;
     };
 }());
+
+function loadSpriteSheet() {
+    global.spSheet.img = new Image();
+    global.spSheet.img.src = "/images/sprite-sheet.png";
+}
+
+function createBackground() {
+    //special thanks to http://stackoverflow.com/questions/9019220/html5-canvas-fill-with-two-colours
+    //for the striped background
+    var pattern = document.createElement('canvas');
+    pattern.width = window.innerWidth;
+    pattern.height = 10;
+    var pctx = pattern.getContext('2d');
+
+    pctx.fillStyle = "rgb(25, 25, 25)";
+    pctx.fillRect(0, 0, pattern.width, pattern.height);
+    pctx.fillStyle = "rgb(20, 20, 20)";
+    pctx.fillRect(0, (pattern.height / 2), pattern.width, pattern.height);
+
+    return pctx.createPattern(pattern, "repeat");
+}
 
 function rand(min, max) {
     min = Math.ceil(min);
