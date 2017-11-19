@@ -1,5 +1,5 @@
 var global = {
-    fpsCap: 20,
+    fpsCap: 15,
     displayFps: true,
     pause: false,
     displayBoxes: true,
@@ -57,12 +57,10 @@ function draw() {
 
         global.ctx.save();
 
-        if (global.shadows) {
-
-            global.ctx.shadowBlur = 15;
-            global.ctx.shadowColor = "lime";
-
-        }
+        // if (global.shadows) {
+        //     global.ctx.shadowBlur = 15;
+        //     global.ctx.shadowColor = "lime";
+        // }
 
         for (var i = 0; i < global.cols; i++) {
             if (!global.rain[i].shouldReset) {

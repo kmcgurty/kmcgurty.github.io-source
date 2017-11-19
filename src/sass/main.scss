@@ -26,6 +26,13 @@ body {
 }
 
 
+
+
+
+
+
+
+
 /**
 .nav-box-wrapper {
     color: white;
@@ -56,10 +63,15 @@ body {
 }
 */
 
-.box-title-wrapper {
+.title-box {
+    margin-bottom: 5px;
+    color: white;
+    border: 5px solid $lime-green;
+    border-radius: 5px;
+    background-color: $transparent-black;
+    margin-bottom: 5px;
     .title {
-        margin-bottom: 5px;
-        color: white;
+        padding: 5px;
     }
 }
 
@@ -147,21 +159,19 @@ canvas {
     color: red;
 }
 
-.controls-wrapper,
-.nav-box-wrapper {
-    #hide-show-controls,
-    .nav-box {
-        border: 5px solid $lime-green;
-        border-radius: 5px;
-        background-color: $transparent-black;
-        margin-bottom: 5px;
-        .box-title {
-            padding: 5px;
-        }
+#hide-show-controls,
+.nav-box {
+    border: 5px solid $lime-green;
+    border-radius: 5px;
+    background-color: $transparent-black;
+    margin-bottom: 5px;
+    .box-title {
+        padding: 5px;
     }
-    #hide-show-controls {
-        cursor: pointer;
-    }
+}
+
+#hide-show-controls {
+    cursor: pointer;
 }
 
 .control-box {
