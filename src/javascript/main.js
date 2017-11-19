@@ -8,13 +8,13 @@ var global = {
     spSheet: {
         img: null,
         width: 43,
-        height: 60,
+        height: 57,
         numSprites: 90
     },
     background: null,
     cols: 0,
     drawWidth: 23,
-    drawHeight: 30
+    drawHeight: 35
 };
 
 window.onload = init;
@@ -36,13 +36,12 @@ function canvasSetup() {
     global.ctx.canvas.height = window.innerHeight;
     global.background = createBackground();
 
-    global.cols = Math.ceil(window.innerWidth / global.drawWidth); //multiply by two to fill the other half of the page
-
+    global.cols = Math.ceil(window.innerWidth / global.drawWidth);
 
 
     for (var i = 0; i < global.cols; i++) {
         global.rain[i] = new Column();
-        global.rain[i].appendChar();
+        //global.rain[i].appendChar();
     }
 }
 
@@ -51,37 +50,37 @@ function draw() {
         document.querySelector("#fps-counter").innerHTML = countFPS() + "/" + global.fpsCap;
     }
 
-    if (!global.pause) {
-        setTimeout(function() { //rate limit drawing
-            global.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            global.ctx.fillStyle = global.background; //striped monitor-like background
-            global.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    setTimeout(function() { //rate limit drawing
+        global.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        global.ctx.fillStyle = global.background; //striped monitor-like background
+        global.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-            global.ctx.save();
+        global.ctx.save();
 
-            if (global.shadows) {
+        if (global.shadows) {
 
-                global.ctx.shadowBlur = 15;
-                global.ctx.shadowColor = "lime";
+            global.ctx.shadowBlur = 15;
+            global.ctx.shadowColor = "lime";
 
+        }
+
+        for (var i = 0; i < global.cols; i++) {
+            if (!global.rain[i].shouldReset) {
+                global.rain[i].appendChar();
+                global.rain[i].getReset();
+            } else {
+                global.rain[i].removeChar();
             }
 
-            for (var i = 0; i < global.cols; i++) {
-                if (!global.rain[i].shouldReset) {
-                    global.rain[i].appendChar();
-                    global.rain[i].getReset();
-                } else {
-                    global.rain[i].removeChar();
-                }
+            global.rain[i].show();
+        }
 
-                global.rain[i].show();
-            }
+        global.ctx.restore();
 
-            global.ctx.restore();
-
+        if (!global.pause) {
             requestAnimationFrame(draw);
-        }, 1000 / global.fpsCap);
-    }
+        }
+    }, 1000 / global.fpsCap);
 }
 
 countFPS = (function() {
