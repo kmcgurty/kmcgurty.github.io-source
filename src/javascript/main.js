@@ -41,7 +41,6 @@ function canvasSetup() {
 
     for (var i = 0; i < global.cols; i++) {
         global.rain[i] = new Column();
-        //global.rain[i].appendChar();
     }
 }
 
@@ -56,11 +55,6 @@ function draw() {
         global.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
         global.ctx.save();
-
-        // if (global.shadows) {
-        //     global.ctx.shadowBlur = 15;
-        //     global.ctx.shadowColor = "lime";
-        // }
 
         for (var i = 0; i < global.cols; i++) {
             if (!global.rain[i].shouldReset) {
