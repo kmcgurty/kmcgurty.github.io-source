@@ -1,10 +1,12 @@
 //column == 1 column of characters
 function Column() {
-    this.spriteData = [];
+    this.colData = [];
     this.size = 0;
     this.hasEnded = false;
-    this.shouldReset = 0;
+    this.shouldReset = false;
     this.x = 0;
+    this.currentFadePos = 0;
+
 
     //increment x based on the last column
     if (global.rain.length > 0) {
@@ -14,41 +16,63 @@ function Column() {
     //add a char to the end of a column
     this.appendChar = function() {
         var y = rand(0, 200);
-        var spriteNum = rand(0, global.spSheet.numSprites);
+        var opacity = 1;
+        var character = rand(0, global.spSheet.numSprites);
 
         if (this.size > 0) {
-            y = this.spriteData[this.size - 1].y + global.drawHeight;
+            y = this.colData[this.size - 1].y + global.drawHeight;
         }
 
-        this.spriteData.push({
-            "spriteNum": spriteNum,
-            "y": y
+        this.colData.push({
+            "character": character,
+            "y": y,
+            "opacity": opacity
         });
 
         this.size++;
     };
 
     this.removeChar = function() {
-        this.spriteData.splice(0, 1);
-        this.size--;
+        for (var i = 0; i < this.currentFadePos; i++) {
+            this.colData[i].opacity -= 0.25;
 
-        if (this.size === 0) {
-            this.shouldReset = false;
-            this.reset();
+            // this.colData.splice(0, 1);
+            // this.size--;
+
+            // if (this.size === 0) {
+            //     this.shouldReset = false;
+            //     this.reset();
+            // }
+        }
+
+        if (this.colData[0].opacity <= 0) {
+            this.colData.splice(0, 1);
+            this.size--;
+            this.currentFadePos--;
+
+            if (this.size == 0) {
+                this.shouldReset = false;
+                this.reset();
+            }
+        }
+
+        if (this.currentFadePos < this.size) {
+            this.currentFadePos++;
         }
     };
 
     this.getReset = function() {
         var chance = rand(0, 100);
 
-        if (chance < 20 && this.spriteData[this.size - 1].y > (window.innerHeight / 1.5)) {
+        if (chance < 20 && this.colData[this.size - 1].y > (window.innerHeight / 1.5)) {
             this.shouldReset = true;
         }
     };
 
     this.reset = function() {
-        this.spriteData = [];
+        this.colData = [];
         this.size = 0;
+        this.currentFadePos = 0;
         this.appendChar();
     };
 
@@ -64,7 +88,7 @@ function Column() {
         var sy = 0;
 
         for (var i = 0; i < this.size; i++) {
-            var sx = this.spriteData[i].spriteNum * sw;
+            var sx = this.colData[i].character * sw;
 
             //use white sprite
             if (i == this.size - 1) {
@@ -72,7 +96,12 @@ function Column() {
                 //sh += 15;
             }
 
-            global.ctx.drawImage(global.spSheet.img, sx, sy, sw, sh, this.x, this.spriteData[i].y, dw, dh);
+            global.ctx.save()
+
+            global.ctx.globalAlpha = this.colData[i].opacity;
+            global.ctx.drawImage(global.spSheet.img, sx, sy, sw, sh, this.x, this.colData[i].y, dw, dh);
+
+            global.ctx.restore();
         }
     };
 }
