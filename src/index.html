@@ -10,6 +10,7 @@
         <script src="/javascript/column.js"></script>
         <script src="/javascript/main.js"></script>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
@@ -59,12 +60,6 @@
                                 <a href="#" id="stop-anim">
                                     <div class="nav-button">Pause animation</div>
                                 </a>
-                                <label id="toggle-fps-wrapper">
-                                    <input type="checkbox" id="toggle-fps">Display FPS counter
-                                </label>
-                                <div id="change-fps-wrapper">
-                                    <input id="change-fps" type="number" value="30" min="0" maxlength="3" size="3">&nbsp;FPS
-                                </div>
                                 <label style="width: 100%" id="toggle-cat-wrapper">
                                     <input type="checkbox" id="toggle-cat">Cat
                                 </label>
@@ -78,7 +73,6 @@
                     </div>
                 </div>
             </div>
-            <div id="fps-counter"></div>
             <canvas id="matrix-rain"></canvas>
         </div>
     </body>

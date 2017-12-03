@@ -38,17 +38,12 @@ function canvasSetup() {
 
     global.cols = Math.ceil(window.innerWidth / global.drawWidth);
 
-
     for (var i = 0; i < global.cols; i++) {
         global.rain[i] = new Column();
     }
 }
 
 function draw() {
-    if (global.displayFps) {
-        document.querySelector("#fps-counter").innerHTML = countFPS() + "/" + global.fpsCap;
-    }
-
     setTimeout(function() { //rate limit drawing
         global.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         global.ctx.fillStyle = global.background; //striped monitor-like background
@@ -74,24 +69,6 @@ function draw() {
         }
     }, 1000 / global.fpsCap);
 }
-
-countFPS = (function() {
-    var lastLoop = (new Date()).getMilliseconds();
-    var count = 1;
-    var fps = 0;
-
-    return function() {
-        var currentLoop = (new Date()).getMilliseconds();
-        if (lastLoop > currentLoop) {
-            fps = count;
-            count = 1;
-        } else {
-            count += 1;
-        }
-        lastLoop = currentLoop;
-        return fps;
-    };
-}());
 
 function loadSpriteSheet() {
     global.spSheet.img = new Image();

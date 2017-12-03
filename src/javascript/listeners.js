@@ -24,24 +24,6 @@ function addLiseners() {
         draw();
     });
 
-    document.getElementById("toggle-fps").addEventListener("change", function() {
-        global.displayFps = !global.displayFps;
-        document.getElementById("fps-counter").innerHTML = "";
-    });
-
-    document.getElementById("change-fps").addEventListener("input", function(event) {
-        console.log("im gay");
-
-
-        var fps = event.target.valueAsNumber;
-
-        if (isNaN(fps)) {
-            fps = 20;
-        }
-
-        global.fpsCap = fps;
-    });
-
     document.getElementById("hide-show-controls").addEventListener("click", function() {
         var controlBox = document.getElementsByClassName("control-box")[0];
         var isExpanded = controlBox.className.indexOf("expanded") !== -1;

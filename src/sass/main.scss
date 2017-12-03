@@ -6,6 +6,7 @@ $green: rgb(0, 128, 0);
 $transparent-green: rgba(0, 128, 0, 0.8);
 $nav-box-width: 70px;
 $nav-box-height: 170px;
+
 @font-face {
     font-family: 'matrix-font';
     src: url('/fonts/matrix.ttf');
@@ -30,44 +31,13 @@ body {
     width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-/**
-.nav-box-wrapper {
-    color: white;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-between;
-    padding-bottom: 10px;
-    .nav-box {
-        border: 5px solid $lime-green;
-        border-radius: 5px;
-        background-color: $transparent-black;
-        width: 49%;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        padding: 15px;
-    }
-    .title-box {
-        .title {
-            padding: 3px;
-            border: 3px solid $green;
-            border-radius: 5px;
-            color: white;
-            background-color: $transparent-green;
-        }
+@media only screen and (max-width: 768px) {
+    a {
+        text-decoration: none;
+        color: black;
     }
 }
-*/
+
 
 .title-box {
     margin-bottom: 5px;
