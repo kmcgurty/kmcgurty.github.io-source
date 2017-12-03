@@ -1,87 +1,86 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Welcome to the Matrix</title>
-    <link rel="shortcut icon" type="image/png" href="/images/favicon.ico" />
-    <link rel='stylesheet' type="text/css" href='/stylesheets/main.css'>
-    <script src="/javascript/lib/jquery-1.12.3.min.js"></script>
-    <script src="/javascript/listeners.js"></script>
-    <script src="/javascript/column.js"></script>
-    <script src="/javascript/main.js"></script>
-    <meta charset="UTF-8">
-</head>
+    <head>
+        <title>Welcome to the Matrix</title>
+        <link rel="shortcut icon" type="image/png" href="/images/favicon.ico" />
+        <link rel='stylesheet' type="text/css" href='/stylesheets/main.css'>
+        <script src="/javascript/lib/jquery-1.12.3.min.js"></script>
+        <script src="/javascript/listeners.js"></script>
+        <script src="/javascript/column.js"></script>
+        <script src="/javascript/main.js"></script>
+        <meta charset="UTF-8">
+    </head>
 
-<body>
-    <div class="wrapper">
-        <div class="toggle-boxes">
-            <div class="nav-button">Hide boxes</div>
-        </div>
-        <div class="box-wrapper center-parent">
-            <a href="https://github.com/kmcgurty/kmcgurty.github.io-source"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
-            <div class="center-child">
-                <div class="title-box">
-                    <a class="title">Welcome to the Matrix.</a>
-                </div>
-                <div class="nav-box-wrapper">
-                    <div class="nav-box">
-                        <div class="box-title-wrapper">
-                            <div class="title">Other projects</div>
-                        </div>
+    <body>
+        <div class="wrapper">
+            <div class="toggle-boxes">
+                <div class="nav-button">Hide boxes</div>
+            </div>
+            <div class="box-wrapper center-parent">
+                <div class="center-child">
+                    <div class="title-box">
+                        <a class="title">Welcome to the Matrix.</a>
                     </div>
-                </div>
-                <div class="controls-wrapper">
-                    <div class="nav-box">
-                        <div class="box-title-wrapper">
-                            <div class="title">Contact Me</div>
-                        </div>
-                        <div class="button-wrapper">
-                            <a href="https://github.com/kmcgurty/kmc_website">
-                                <div class="nav-button">Github</div>
-                            </a>
-                            <a href="http://steamcommunity.com/id/kmcgurty">
-                                <div class="nav-button">Steam</div>
-                            </a>
-                            <a href="https://reddit.com/u/kmcgurty1">
-                                <div class="nav-button">Reddit</div>
-                            </a>
-                            <a href="mailto:admin@kmcdeals.com">
-                                <div class="nav-button" title="admin@kmcdeals.com">Email</div>
-                            </a>
-                        </div>
-                    </div>
-                    <div id="hide-show-controls">
-                        <div class="box-title-wrapper">
-                            <div class="box-title">Controls ▶</div>
-                        </div>
-                    </div>
-                    <div class="control-box collapsed">
-                        <div class="button-wrapper">
-                            <a href="#" id="stop-anim">
-                                <div class="nav-button">Pause animation</div>
-                            </a>
-                            <label id="toggle-fps-wrapper">
-                                <input type="checkbox" id="toggle-fps">Display FPS counter
-                            </label>
-                            <div id="change-fps-wrapper">
-                                <input id="change-fps" type="number" value="30" min="0" maxlength="3" size="3">&nbsp;FPS
+                    <div class="nav-box-wrapper">
+                        <div class="nav-box">
+                            <div class="box-title-wrapper">
+                                <div class="title">Other projects</div>
                             </div>
-                            <label style="width: 100%" id="toggle-cat-wrapper">
-                                <input type="checkbox" id="toggle-cat">Cat
-                            </label>
-                            <!--
+                        </div>
+                    </div>
+                    <div class="controls-wrapper">
+                        <div class="nav-box">
+                            <div class="box-title-wrapper">
+                                <div class="title">Contact Me</div>
+                            </div>
+                            <div class="button-wrapper">
+                                <a href="https://github.com/kmcgurty/kmc_website">
+                                    <div class="nav-button">Github</div>
+                                </a>
+                                <a href="http://steamcommunity.com/id/kmcgurty">
+                                    <div class="nav-button">Steam</div>
+                                </a>
+                                <a href="https://reddit.com/u/kmcgurty1">
+                                    <div class="nav-button">Reddit</div>
+                                </a>
+                                <a href="mailto:admin@kmcdeals.com">
+                                    <div class="nav-button" title="admin@kmcdeals.com">Email</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="hide-show-controls">
+                            <div class="box-title-wrapper">
+                                <div class="box-title">Controls ▶</div>
+                            </div>
+                        </div>
+                        <div class="control-box collapsed">
+                            <div class="button-wrapper">
+                                <a href="#" id="stop-anim">
+                                    <div class="nav-button">Pause animation</div>
+                                </a>
+                                <label id="toggle-fps-wrapper">
+                                    <input type="checkbox" id="toggle-fps">Display FPS counter
+                                </label>
+                                <div id="change-fps-wrapper">
+                                    <input id="change-fps" type="number" value="30" min="0" maxlength="3" size="3">&nbsp;FPS
+                                </div>
+                                <label style="width: 100%" id="toggle-cat-wrapper">
+                                    <input type="checkbox" id="toggle-cat">Cat
+                                </label>
+                                <!--
                             <label id="toggle-shadows-wrapper">
                                 <input type="checkbox" id="toggle-shadows">Draw shadows (<span class="warning">poor performance on FF</span>)
                             </label>
                             -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="fps-counter"></div>
+            <canvas id="matrix-rain"></canvas>
         </div>
-        <div id="fps-counter"></div>
-        <canvas id="matrix-rain"></canvas>
-    </div>
-</body>
+    </body>
 
 </html>
