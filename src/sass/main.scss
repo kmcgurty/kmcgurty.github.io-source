@@ -11,9 +11,14 @@ $nav-box-height: 170px;
     src: url('/fonts/matrix.ttf');
 }
 
+@font-face {
+    font-family: 'segoeui';
+    src: url('/fonts/segoeui.ttf');
+}
+
 body {
     margin: 0px;
-    font-family: 'segoe ui';
+    font-family: 'segoeui';
 }
 
 #matrix-rain {
@@ -24,6 +29,7 @@ body {
     height: 100%;
     width: 100%;
 }
+
 
 
 
