@@ -31,13 +31,16 @@ body {
     width: 100%;
 }
 
-@media only screen and (max-width: 768px) {
-    a {
-        text-decoration: none;
-        color: black;
-    }
+.box-wrapper {
+    width: 410px;
+    color: white;
 }
 
+@media only screen and (max-width: 410px) {
+    .box-wrapper {
+        width: 99%;
+    }
+}
 
 .title-box {
     margin-bottom: 5px;
@@ -119,11 +122,6 @@ canvas {
         text-align: center;
         transform: translateY(-50%);
     }
-}
-
-.box-wrapper {
-    width: 410px;
-    color: white;
 }
 
 #toggle-shadows-wrapper {
