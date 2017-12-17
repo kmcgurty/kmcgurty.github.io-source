@@ -42,6 +42,6 @@ function addLiseners() {
     });
 
     document.querySelector(".toggle-boxes").addEventListener("click", function() {
-
+        toggleBoxes();
     });
 }

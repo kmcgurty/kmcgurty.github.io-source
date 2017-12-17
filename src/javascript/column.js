@@ -3,14 +3,19 @@ function Column(x) {
     this.colData = [];
     this.size = 0;
     this.hasEnded = false;
-    this.shouldReset = false;
+    this.shouldRemove = false;
     this.shouldDraw = true;
     this.x = x || 0; // x position of each column
     this.endingY = 0;
     this.currentFadePos = 0; //keeps track of the chars fading away
     this.numSprites = 90;
-    this.titleChar = false;
 
+    this.isTitleChar = false; //used to distinguish 
+
+    this.start = {
+        min: -10,
+        max: 3
+    }
 
     this.spriteSize = {
         width: 43,
@@ -24,7 +29,7 @@ function Column(x) {
 
     //add a char to the end of a column
     this.appendChar = function() {
-        var y = rand(-10, 3) * global.drawHeight;
+        var y = rand(this.start.min, this.start.max) * global.drawHeight;
         var character = rand(0, this.numSprites);
 
         if (this.size > 0) {
@@ -54,7 +59,7 @@ function Column(x) {
             this.currentFadePos--;
 
             if (this.size == 0) {
-                this.shouldReset = false;
+                this.shouldRemove = false;
                 this.reset();
             }
         }
@@ -68,7 +73,7 @@ function Column(x) {
         var chance = rand(0, 100);
 
         if (chance < 20 && this.colData[this.size - 1].y > (window.innerHeight / 1.5)) {
-            this.shouldReset = true;
+            this.shouldRemove = true;
         }
     };
 
@@ -99,9 +104,9 @@ function Column(x) {
             }
 
             //use title font
-            if (this.titleChar) {
+            if (this.isTitleChar) {
                 sy = this.spriteSize.height * 2 + 3;
-                sh = sh + 10;
+                //sh = sh + 10;
             }
 
             global.ctx.save()

@@ -8,32 +8,13 @@ $nav-box-width: 70px;
 $nav-box-height: 170px;
 
 @font-face {
-    font-family: 'matrix-font';
-    src: url('/fonts/matrix.ttf');
-}
-
-@font-face {
-    font-family: 'segoeui';
-    src: url('/fonts/segoeui.ttf');
+    font-family: 'ocra';
+    src: url('/fonts/OCRA.ttf');
 }
 
 body {
     margin: 0px;
-    font-family: 'helvetica';
-}
-
-#matrix-rain {
-    background-color: $black;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-}
-
-.box-wrapper {
-    width: 410px;
-    color: white;
+    font-family: 'ocra';
 }
 
 @media only screen and (max-width: 410px) {
@@ -41,125 +22,6 @@ body {
         width: 99%;
         overflow: hidden;
     }
-}
-
-.title-box {
-    margin-bottom: 5px;
-    color: white;
-    border: 5px solid $lime-green;
-    border-radius: 5px;
-    background-color: $transparent-black;
-    margin-bottom: 5px;
-    .title {
-        padding: 5px;
-    }
-}
-
-.button-wrapper {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.nav-button {
-    border: 3px solid $green;
-    border-radius: 5px;
-    background-color: $transparent-green;
-    margin: 1px;
-    margin-bottom: 5px;
-    padding-left: 3px;
-    padding-right: 3px;
-    color: $lime-green;
-    cursor: pointer;
-}
-
-.control-box {
-    border-radius: 5px;
-    transition: max-height 2s;
-    overflow: hidden;
-    box-sizing: border-box;
-    background-color: $transparent-black;
-}
-
-.collapsed {
-    max-height: 0px;
-}
-
-.expanded {
-    max-height: 200px;
-}
-
-input[type="number"] {
-    width: 4em;
-}
-
-a {
-    text-decoration: none;
-    color: $lime-green;
-}
-
-#fps-counter {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    background-color: red;
-    color: white;
-}
-
-canvas {
-    cursor: inherit;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-}
-
-.center-parent {
-    margin: auto;
-    height: 100vh;
-    .center-child {
-        position: relative;
-        top: 50%;
-        text-align: center;
-        transform: translateY(-50%);
-    }
-}
-
-#toggle-shadows-wrapper {
-    width: 100%;
-    margin-bottom: 5px;
-}
-
-.warning {
-    color: red;
-}
-
-#hide-show-controls,
-.nav-box {
-    border: 5px solid $lime-green;
-    border-radius: 5px;
-    background-color: $transparent-black;
-    margin-bottom: 5px;
-    .box-title {
-        padding: 5px;
-    }
-}
-
-#hide-show-controls {
-    cursor: pointer;
-}
-
-.control-box {
-    .button-wrapper {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-}
-
-.toggle-boxes {
-    position: absolute;
-    top: 0px;
-    right: 0px;
 }
 
 label {
