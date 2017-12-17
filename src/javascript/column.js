@@ -1,12 +1,21 @@
 //column == 1 column of characters
-function Column() {
+function Column(x) {
     this.colData = [];
     this.size = 0;
     this.hasEnded = false;
     this.shouldReset = false;
-    this.x = 0;
-    this.currentFadePos = 0;
+    this.shouldDraw = true;
+    this.x = x || 0; // x position of each column
+    this.endingY = 0;
+    this.currentFadePos = 0; //keeps track of the chars fading away
+    this.numSprites = 90;
+    this.titleChar = false;
 
+
+    this.spriteSize = {
+        width: 43,
+        height: 57
+    }
 
     //increment x based on the last column
     if (global.rain.length > 0) {
@@ -15,34 +24,28 @@ function Column() {
 
     //add a char to the end of a column
     this.appendChar = function() {
-        var y = rand(0, 200);
-        var opacity = 1;
-        var character = rand(0, global.spSheet.numSprites);
+        var y = rand(-10, 3) * global.drawHeight;
+        var character = rand(0, this.numSprites);
 
         if (this.size > 0) {
             y = this.colData[this.size - 1].y + global.drawHeight;
         }
 
+        this.endingY = y;
+
         this.colData.push({
             "character": character,
             "y": y,
-            "opacity": opacity
+            "opacity": 1
         });
 
         this.size++;
     };
 
+    //fading away effect
     this.removeChar = function() {
         for (var i = 0; i < this.currentFadePos; i++) {
             this.colData[i].opacity -= 0.25;
-
-            // this.colData.splice(0, 1);
-            // this.size--;
-
-            // if (this.size === 0) {
-            //     this.shouldReset = false;
-            //     this.reset();
-            // }
         }
 
         if (this.colData[0].opacity <= 0) {
@@ -79,8 +82,8 @@ function Column() {
     this.show = function() {
         global.ctx.fillStyle = "lime";
 
-        var sw = global.spSheet.width;
-        var sh = global.spSheet.height;
+        var sw = this.spriteSize.width;
+        var sh = this.spriteSize.height;
 
         var dw = global.drawWidth;
         var dh = global.drawHeight;
@@ -92,8 +95,13 @@ function Column() {
 
             //use white sprite
             if (i == this.size - 1) {
-                sy = global.spSheet.height;
-                //sh += 15;
+                sy = this.spriteSize.height;
+            }
+
+            //use title font
+            if (this.titleChar) {
+                sy = this.spriteSize.height * 2 + 3;
+                sh = sh + 10;
             }
 
             global.ctx.save()

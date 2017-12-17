@@ -12,7 +12,6 @@ function loadHTML() {
     });
 }
 
-
 function addLiseners() {
     window.onresize = function(event) {
         //re-init everything on resize to prevent stretching
@@ -43,27 +42,6 @@ function addLiseners() {
     });
 
     document.querySelector(".toggle-boxes").addEventListener("click", function() {
-        var areShown = global.displayBoxes;
-        var boxes = document.querySelector(".box-wrapper");
-        var button = document.querySelector(".toggle-boxes .nav-button");
 
-        global.displayBoxes = !global.displayBoxes;
-
-        if (areShown) {
-            boxes.style.display = "none";
-            button.innerHTML = "Show boxes";
-        } else {
-            boxes.style.display = "";
-            button.innerHTML = "Hide boxes";
-        }
     });
-
-    window.onLoad = function() {
-        document.getElementById("change-fps").value = global.fps;
-
-        if (!global.displayBoxes) {
-            document.querySelector(".box-wrapper").style.display = "none";
-            document.querySelector(".toggle-boxes .nav-button").innerHTML = "Show boxes";
-        }
-    };
 }
