@@ -12,7 +12,7 @@ var global = {
     drawWidth: 23, //char px
     drawHeight: 35, //char px
     title: {
-        txt: "The Matrix",
+        txt: "im gay teehee",
         complete: false,
         shouldFade: false,
         timeToFade: 3000,
