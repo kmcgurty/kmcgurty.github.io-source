@@ -12,7 +12,7 @@ var global = {
     drawWidth: 23, //char px
     drawHeight: 35, //char px
     title: {
-        txt: "im gay teehee",
+        txt: "WIP please ignore",
         complete: false,
         shouldFade: false,
         timeToFade: 3000,
