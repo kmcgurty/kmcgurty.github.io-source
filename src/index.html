@@ -1,81 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
     <head>
         <title>Welcome to the Matrix</title>
-        <link rel="shortcut icon" type="image/png" href="/images/favicon_heart.ico" />
+        <link rel="shortcut icon" type="image/png" href="/misc/images/favicon_heart.ico" />
         <link rel='stylesheet' type="text/css" href='/stylesheets/main.css'>
+        <link rel='stylesheet' type="text/css" href='/stylesheets/simple-scrollbar.css'>
         <script src="/javascript/lib/jquery-1.12.3.min.js"></script>
+        <script src="/javascript/lib/simple-scrollbar.min.js"></script>
         <script src="/javascript/listeners.js"></script>
         <script src="/javascript/column.js"></script>
         <script src="/javascript/util.js"></script>
         <script src="/javascript/main.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=0.75">
+        <meta name="theme-color" content="#191919" />
+        <noscript>
+            <style>
+            .content.hide {
+                visibility: visible !important;
+                opacity: 100 !important;
+            }
+            </style>
+        </noscript>
     </head>
 
     <body>
-        <div class="wrapper">
-            <div class="toggle-boxes">
-                <div class="nav-button">Hide boxes</div>
-            </div>
-            <div class="box-wrapper center-parent">
-                <div class="center-child">
-                    <div class="title-box">
-                        <a class="title">Welcome to the Matrix.</a>
-                    </div>
-                    <div class="nav-box-wrapper">
-                        <div class="nav-box">
-                            <div class="box-title-wrapper">
-                                <div class="title">Other projects</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="controls-wrapper">
-                        <div class="nav-box">
-                            <div class="box-title-wrapper">
-                                <div class="title">Contact Me</div>
-                            </div>
-                            <div class="button-wrapper">
-                                <a href="https://github.com/kmcgurty/kmc_website">
-                                    <div class="nav-button">Github</div>
-                                </a>
-                                <a href="http://steamcommunity.com/id/kmcgurty">
-                                    <div class="nav-button">Steam</div>
-                                </a>
-                                <a href="https://reddit.com/u/kmcgurty1">
-                                    <div class="nav-button">Reddit</div>
-                                </a>
-                                <a href="mailto:admin@kmcdeals.com">
-                                    <div class="nav-button" title="admin@kmcdeals.com">Email</div>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="hide-show-controls">
-                            <div class="box-title-wrapper">
-                                <div class="box-title">Controls ▶</div>
-                            </div>
-                        </div>
-                        <div class="control-box collapsed">
-                            <div class="button-wrapper">
-                                <a href="#" id="stop-anim">
-                                    <div class="nav-button">Pause animation</div>
-                                </a>
-                                <label style="width: 100%" id="toggle-cat-wrapper">
-                                    <input type="checkbox" id="toggle-cat">Cat
-                                </label>
-                                <!--
-                            <label id="toggle-shadows-wrapper">
-                                <input type="checkbox" id="toggle-shadows">Draw shadows (<span class="warning">poor performance on FF</span>)
-                            </label>
-                            -->
-                            </div>
-                        </div>
-                    </div>
+        <div class="ss-container content hide">
+            <div class="square">
+                <div class="header">Header 2</div>
+                <div class="text">
+                    Welcome to my website! We are still under construction.
                 </div>
             </div>
-            <canvas id="matrix-rain"></canvas>
+            <div class="square">
+                <div class="header">
+                    Other Projects
+                </div>
+                <div class="text">Here are some of my other projects!</div>
+                <div id="links" class="text"><noscript>Sorry, you need JavaScript enabled to see my other projects!</noscript></div>
+            </div>
+            <div class="square">
+                <div class="header">Header 3</div>
+                <div class="text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis pellentesque massa, at maximus ex hendrerit nec. Morbi congue nulla eget metus pulvinar, eget fringilla ipsum rutrum. Nullam risus lectus, ultrices in nisi sed, pellentesque fringilla elit. Vestibulum eu elit eu nisi lobortis vestibulum in vestibulum tortor. Ut elementum est quis nibh pharetra, vitae accumsan sem gravida. Aliquam ac pellentesque mauris.
+                </div>
+            </div>
+            <div class="square">
+                <div class="header">Header 4</div>
+                <div class="text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis pellentesque massa, at maximus ex hendrerit nec. Morbi congue nulla eget metus pulvinar, eget fringilla ipsum rutrum. Nullam risus lectus, ultrices in nisi sed, pellentesque fringilla elit. Vestibulum eu elit eu nisi lobortis vestibulum in vestibulum tortor. Ut elementum est quis nibh pharetra
+                </div>
+            </div>
+            <div class="square">
+                <div class="header">Header 5</div>
+                <div class="text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque iaculis pellentesque massa, at maximus ex hendrerit nec. Morbi congue nulla eget metus pulvinar, eget fringilla ipsum rutrum. Nullam risus lectus, ultrices in nisi sed, pellentesque fringilla elit. Vestibulum eu elit eu nisi lobortis vestibulum in vestibulum tortor. Ut elementum est quis nibh pharetra, vitae accumsan sem gravida. Aliquam ac pellentesque mauris.
+                </div>
+            </div>
+            <div class="square controls">
+                <div class="header">Controls</div>
+                <div class="text">No controls currently. WIP</div>
+            </div>
         </div>
+        <div class="dimmer hide"></div>
+        <canvas id="matrix-rain"></canvas>
     </body>
 
 </html>

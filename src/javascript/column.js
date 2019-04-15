@@ -13,7 +13,7 @@ function Column(x) {
     this.isTitleChar = false; //used to distinguish 
 
     this.start = {
-        min: -10,
+        min: -20,
         max: 3
     }
 
@@ -105,6 +105,8 @@ function Column(x) {
 
             //use title font
             if (this.isTitleChar) {
+                //use the 3rd row of sprites
+                //+3 is because you can see part of the other characters without it
                 sy = this.spriteSize.height * 2 + 3;
                 //sh = sh + 10;
             }

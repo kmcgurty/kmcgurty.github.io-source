@@ -1,7 +1,6 @@
 var global = {
-    fpsCap: 15,
+    fpsCap: 17,
     pause: false,
-    displayBoxes: true, // boxes are toggled off later on
     ctx: null,
     rain: [],
     spSheet: {
@@ -9,15 +8,16 @@ var global = {
     },
     background: null, //background pattern
     cols: 0, //number of columns on the screen
-    drawWidth: 23, //char px
-    drawHeight: 35, //char px
+    drawWidth: 23, //char px 23 default
+    drawHeight: 35, //char px 35 default
     title: {
-        txt: "WIP please ignore",
+        txt: "Welcome\nTo The Matrix",
         complete: false,
         shouldFade: false,
-        timeToFade: 3000,
+        timeToFade: 5000,
         fadeRate: 0.5
-    }
+    },
+    visited: false
 };
 
 const MIN_TITLE_CHAR = 32; //minimum character in the ascii table, needed to offset the sprite sheet coords
@@ -32,16 +32,30 @@ function init() {
 
     addLiseners();
 
-    toggleBoxes();
     canvasSetup();
 
     initTitleSeq();
     drawTitleSequence();
 }
 
+function loadHTML() {
+    $.getJSON("./javascript/links.json", function(result) {
+        var data = result.d;
+        var toAppend = document.querySelector("#links");
+        var html = "";
+
+        for (var i = 0; i < data.length; i++) {
+            html += '<div class="i"><a href="' + data[i].link + '" target="_blank">' + data[i].title + '</a></div>';
+        }
+
+        toAppend.innerHTML += html;
+    });
+}
 
 function drawTitleSequence() {
-    var centerY = (Math.floor((global.ctx.canvas.height / 2) / global.drawHeight) * global.drawHeight);
+    //math.floor is to get the center position, in increments of the drawheight
+    //we subract 1 drawheight because it's not quite in the center
+    var centerY = (Math.floor((global.ctx.canvas.height / 2) / global.drawHeight) * global.drawHeight) - global.drawHeight;
 
     setTimeout(function() {
         setBackgrnd();
@@ -98,11 +112,19 @@ function drawTitleSequence() {
         //if title has faded away completely, draw infinitely
         if (!global.title.complete) {
             requestAnimationFrame(drawTitleSequence);
+
         } else {
+            showContent();
             initInfinite();
             drawInfinite();
         }
     }, 1000 / global.fpsCap);
+}
+
+
+function showContent() {
+    document.querySelector(".content").className = "ss-container content show";
+    document.querySelector(".dimmer").className = "dimmer show";
 }
 
 
@@ -174,7 +196,7 @@ function setBackgrnd() {
 
 function loadSpriteSheet() {
     global.spSheet.img = new Image();
-    global.spSheet.img.src = "/images/sprite-sheet.png";
+    global.spSheet.img.src = "/misc/images/sprite-sheet.png";
 }
 
 
@@ -192,21 +214,4 @@ function createBackground() {
     pctx.fillRect(0, (pattern.height / 2), pattern.width, pattern.height);
 
     return pctx.createPattern(pattern, "repeat");
-}
-
-
-function toggleBoxes() {
-    var visible = global.displayBoxes;
-    var boxes = document.querySelector(".box-wrapper");
-    var button = document.querySelector(".toggle-boxes .nav-button");
-
-    if (visible) {
-        boxes.style.display = "none";
-        button.innerHTML = "Show boxes";
-    } else {
-        boxes.style.display = "";
-        button.innerHTML = "Hide boxes";
-    }
-
-    global.displayBoxes = !global.displayBoxes;
 }
